@@ -39,9 +39,15 @@ def new_meta(input_folder: str, template_meta: str) -> Dict[str, Dict]:
         _, basicname = os.path.split(fullname)
         meta['mp4file'] = basicname
 
-        duration_str, duration_sec = probe_duration(fullname)
-        meta['duration'] = duration_str
-        meta['durationsec'] = duration_sec
+        try:
+            duration_str, duration_sec = probe_duration(fullname)
+            meta['duration'] = duration_str
+            meta['durationsec'] = duration_sec
+        except ValueError:
+            print(fullname)
+            raise
+        else:
+            raise
 
         # TODO
         result[str(i+1)] = meta
