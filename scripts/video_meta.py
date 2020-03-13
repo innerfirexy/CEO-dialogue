@@ -11,17 +11,24 @@ from tqdm import tqdm
 
 
 def probe_duration(fname: str) -> Tuple[str, float]:
+    # workaround for '$' character in path
+    if '$' in fname:
+        fname = fname.replace('$', '\$')
     try:
         ret1 = subprocess.run('ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 -sexagesimal \"{}\"'.format(fname), \
         text=True, shell=True, stderr=PIPE, stdout=PIPE)
         if ret1.returncode > 0:
-            sys.exit(1)
+            print('error in ret1', fname)
+            print(ret1.stderr)
+            raise Exception
         duration_str = ret1.stdout.strip()
 
         ret2 = subprocess.run('ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 \"{}\"'.format(fname), \
             text=True, shell=True, stderr=PIPE, stdout=PIPE)
         if ret2.returncode > 0:
-            sys.exit(1)
+            print('error in ret2', fname)
+            print(ret2.stderr)
+            raise Exception
         duration_sec = float(ret2.stdout.strip())
     except Exception:
         raise
@@ -54,7 +61,7 @@ def new_meta(input_folder: str, template_meta: str) -> Dict[str, Dict]:
             meta['durationsec'] = duration_sec
 
             # TODO
-            
+
         except Exception:
             print(fullname)
             raise
