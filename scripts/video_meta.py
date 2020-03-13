@@ -49,7 +49,7 @@ def new_meta(input_folder: str, template_meta: str) -> Dict[str, Dict]:
         empty_meta = json.load(f)
 
     result: Dict[str, Dict] = {}
-    for i, fullname in tqdm(enumerate(all_files), ncols=100):
+    for i, fullname in enumerate(tqdm(all_files, ncols=100)):
         meta = copy.deepcopy(empty_meta)
 
         _, basicname = os.path.split(fullname)
@@ -85,7 +85,7 @@ def main():
     input_folder = '/Data/CNBC_ceo_videos/MP4'
     meta_data = new_meta(input_folder, '../metadata/template_meta.json')
     with open('../metadata/video_ids.json', 'w') as f:
-        json.dump(meta_data, indent=4)
+        json.dump(meta_data, f, indent=4)
 
 
 if __name__ == "__main__":
