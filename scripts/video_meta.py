@@ -33,7 +33,7 @@ def new_meta(input_folder: str, template_meta: str) -> Dict[str, Dict]:
         empty_meta = json.load(f)
 
     result: Dict[str, Dict] = {}
-    for i, fullname in tqdm(enumerate(all_files), ncol=100):
+    for i, fullname in tqdm(enumerate(all_files), ncols=100):
         meta = copy.deepcopy(empty_meta)
 
         _, basicname = os.path.split(fullname)
