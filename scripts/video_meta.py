@@ -52,13 +52,13 @@ def new_meta(input_folder: str, template_meta: str) -> Dict[str, Dict]:
             duration_str, duration_sec = probe_duration(fullname)
             meta['duration'] = duration_str
             meta['durationsec'] = duration_sec
-        except ValueError:
+
+            # TODO
+            
+        except Exception:
             print(fullname)
             raise
-        else:
-            raise
 
-        # TODO
         result[str(i+1)] = meta
 
     return result
