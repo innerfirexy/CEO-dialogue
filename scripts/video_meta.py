@@ -11,13 +11,22 @@ from tqdm import tqdm
 
 
 def probe_duration(fname: str) -> Tuple[str, float]:
-    ret1 = subprocess.run('ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 -sexagesimal {}'.format(fname), \
+    try:
+        ret1 = subprocess.run('ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 -sexagesimal \"{}\"'.format(fname), \
         text=True, shell=True, stderr=PIPE, stdout=PIPE)
-    duration_str = ret1.stdout.strip()
-    ret2 = subprocess.run('ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 {}'.format(fname), \
-        text=True, shell=True, stderr=PIPE, stdout=PIPE)
-    duration_sec = ret2.stdout.strip()
-    return duration_str, float(duration_sec)
+        if ret1.returncode > 0:
+            sys.exit(1)
+        duration_str = ret1.stdout.strip()
+
+        ret2 = subprocess.run('ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 \"{}\"'.format(fname), \
+            text=True, shell=True, stderr=PIPE, stdout=PIPE)
+        if ret2.returncode > 0:
+            sys.exit(1)
+        duration_sec = float(ret2.stdout.strip())
+    except Exception:
+        raise
+    
+    return duration_str, duration_sec
 
 
 def probe_samplerate(fname: str) -> str:
