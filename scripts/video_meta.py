@@ -7,6 +7,7 @@ from subprocess import (PIPE)
 from pprint import (pprint)
 from utils import (list_all_mp4, check_installed)
 from typing import (Tuple, Any, Dict)
+from tqdm import tqdm
 
 
 def probe_duration(fname: str) -> Tuple[str, float]:
@@ -32,7 +33,7 @@ def new_meta(input_folder: str, template_meta: str) -> Dict[str, Dict]:
         empty_meta = json.load(f)
 
     result: Dict[str, Dict] = {}
-    for i, fullname in enumerate(all_files):
+    for i, fullname in tqdm(enumerate(all_files), ncol=100):
         meta = copy.deepcopy(empty_meta)
 
         _, basicname = os.path.split(fullname)
