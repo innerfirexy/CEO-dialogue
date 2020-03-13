@@ -1,0 +1,24 @@
+{
+    "1": {
+        "title": "",
+        "url": "",
+        "date": "",
+        "mp4file": "",
+        "duration": "",
+        "durationsec": 0.0,
+        "headmusiclength": 0.0,
+        "tailmusiclength": 0.0,
+        "speakers": ["", ""]
+    },
+    "2": {
+        "title": "",
+        "url": "",
+        "date": "",
+        "mp4file": "",
+        "duration": "",
+        "durationsec": 0.0,
+        "headmusiclength": 0.0,
+        "tailmusiclength": 0.0,
+        "speakers": ["", ""]
+    }
+}
