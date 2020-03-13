@@ -56,5 +56,15 @@ def test():
     pprint(res)
 
 
+def main():
+    assert check_installed('ffmpeg')
+
+    input_folder = '/Data/CNBC_ceo_videos/MP4'
+    meta_data = new_meta(input_folder, '../metadata/template_meta.json')
+    with open('../metadata/video_ids.json', 'w') as f:
+        json.dump(meta_data, indent=4)
+
+
 if __name__ == "__main__":
-    test()
+    # test()
+    main()
