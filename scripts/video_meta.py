@@ -59,9 +59,6 @@ def new_meta(input_folder: str, template_meta: str) -> Dict[str, Dict]:
             duration_str, duration_sec = probe_duration(fullname)
             meta['duration'] = duration_str
             meta['durationsec'] = duration_sec
-
-            # TODO
-
         except Exception:
             print(fullname)
             raise
@@ -69,6 +66,19 @@ def new_meta(input_folder: str, template_meta: str) -> Dict[str, Dict]:
         result[str(i+1)] = meta
 
     return result
+
+
+def alter_meta(old_meta_file: str, input_folder: str = None, new_meta_file: str = None) -> Dict[str, Dict]:
+    if input_folder:
+        all_files = sorted(list_all_mp4(input_folder))
+    
+    with open(old_meta_file, 'r') as f:
+        old_meta = json.load(f)
+    
+    new_meta = copy.deepcopy(old_meta)
+    # TODO
+
+    return new_meta
 
 
 def test():
@@ -81,11 +91,14 @@ def test():
 
 def main():
     assert check_installed('ffmpeg')
-
     input_folder = '/Data/CNBC_ceo_videos/MP4'
-    meta_data = new_meta(input_folder, '../metadata/template_meta.json')
-    with open('../metadata/video_ids.json', 'w') as f:
-        json.dump(meta_data, f, indent=4)
+
+    # meta_data = new_meta(input_folder, '../metadata/template_meta.json')
+    # with open('../metadata/video_ids.json', 'w') as f:
+    #     json.dump(meta_data, f, indent=4)
+
+    new_meta = alter_meta(old_meta_file='../metadata/video_ids.json')
+    pprint(list(new_meta.items())[:5])
 
 
 if __name__ == "__main__":
